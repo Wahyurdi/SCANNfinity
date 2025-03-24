@@ -13,7 +13,7 @@
 <style>
     @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Poppins:wght@300;400;600;700&display=swap');
     
-    :root {
+:root {
     --pink-light: #ffcfe0;
     --pink-medium: #ff9ebb;
     --pink-dark: #ff6b9a;
@@ -30,7 +30,6 @@ body {
     padding: 0;
     overflow-x: hidden;
 }
-
 
 .content {
     position: relative;
@@ -55,10 +54,9 @@ body {
     width: 100%;
     max-width: 480px;
     backdrop-filter: blur(12px);
-    transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.5s;
     text-align: center;
     border: 2px solid rgba(255, 255, 255, 0.8);
-    position: relative;
 }
 
 .content-card:hover {
@@ -98,7 +96,6 @@ body {
     100% { transform: translateY(-200px) scale(0); opacity: 0; }
 }
 
-/* Navbar Icons - Versi yang Lebih Responsif */
 .navbar {
     position: fixed;
     top: 0;
@@ -120,14 +117,13 @@ body {
     font-weight: 700;
     color: var(--pink-dark);
     text-decoration: none;
-    transition: all 0.3s ease;
+    transition: color 0.3s ease;
 }
 
 .navbar-icons {
     display: flex;
     align-items: center;
     gap: 1.5rem;
-    transition: all 0.3s ease;
 }
 
 .nav-icon {
@@ -140,7 +136,7 @@ body {
     background: linear-gradient(45deg, var(--pink-dark), var(--pink-medium));
     color: white;
     text-decoration: none;
-    transition: all 0.3s ease;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
     box-shadow: 0 3px 10px rgba(255, 107, 154, 0.3);
     position: relative;
     overflow: hidden;
@@ -148,7 +144,7 @@ body {
 
 .nav-icon i {
     font-size: 1.2rem;
-    transition: all 0.3s ease;
+    transition: transform 0.3s ease;
     z-index: 2;
 }
 
@@ -160,7 +156,7 @@ body {
     width: 100%;
     height: 100%;
     background: rgba(255, 255, 255, 0.2);
-    transition: all 0.4s ease;
+    transition: left 0.4s ease;
     z-index: 1;
 }
 
@@ -186,7 +182,6 @@ body {
     background: linear-gradient(45deg, #833AB4, #FD1D1D, #FCAF45);
 }
 
-/* Label untuk ikon pada layar yang lebih besar */
 .nav-icon .icon-label {
     display: none;
     margin-left: 8px;
@@ -195,28 +190,23 @@ body {
     color: white;
 }
 
-/* Animasi untuk ikon */
 @keyframes pulse {
     0% { transform: scale(1); }
     50% { transform: scale(1.15); }
     100% { transform: scale(1); }
 }
 
-/* Ketika navbar di-scroll ke bawah (bisa ditambahkan dengan JavaScript) */
 .navbar.scrolled {
     padding: 0.3rem 1rem;
     background-color: rgba(255, 255, 255, 0.95);
     box-shadow: 0 3px 10px rgba(255, 107, 154, 0.3);
 }
 
-/* Responsive Styles - Ditingkatkan */
 @media screen and (min-width: 992px) {
-    /* Pada layar besar, tambahkan animasi hover yang lebih menarik */
     .nav-icon:hover i {
         animation: pulse 1s infinite;
     }
     
-    /* Efek hover yang lebih halus */
     .navbar-brand:hover {
         color: var(--pink-darker);
         transform: translateY(-2px);
@@ -288,7 +278,6 @@ body {
     }
 }
 
-/* Handle untuk orientasi landscape pada perangkat mobile */
 @media screen and (max-height: 500px) and (orientation: landscape) {
     .navbar {
         padding: 0.2rem 1rem;
@@ -304,7 +293,6 @@ body {
     }
 }
 
-/* Opsi tampilan label pada layar lebih besar (opsional) */
 @media screen and (min-width: 1200px) {
     .nav-icon {
         width: auto;
@@ -317,7 +305,6 @@ body {
     }
 }
 
-/* Love message styling */
 .love-message {
     font-size: 1.25rem;
     line-height: 1.8;
@@ -404,7 +391,7 @@ body {
     font-size: 1.1rem;
     border-radius: 50px;
     cursor: pointer;
-    transition: all 0.3s ease;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
     box-shadow: 0 6px 20px rgba(255, 107, 154, 0.4);
     margin-top: 1.2rem;
     position: relative;
@@ -456,7 +443,7 @@ body {
     height: 100%;
     background-color: var(--pink-medium);
     border-radius: 10px;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -496,7 +483,7 @@ body {
 .envelope-heart {
     font-size: 3rem;
     color: white;
-    filter: drop-shadow(0 2px 5px rgba(0,0,0,0.2));
+    filter: drop-shadow(0 2px 5px rgba(0, 0, 0, 0.2));
 }
 
 .message-text {
@@ -534,7 +521,7 @@ body {
     background-color: #f8f8f8;
     overflow: hidden;
     scroll-snap-align: start;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     position: relative;
     transform: rotate(-3deg);
     transition: all 0.3s ease;
@@ -548,7 +535,7 @@ body {
 .photo-frame:hover {
     transform: scale(1.1) rotate(0);
     z-index: 5;
-    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
 }
 
 .photo {
@@ -568,7 +555,6 @@ body {
     font-size: 2rem;
 }
 
-/* Star effect */
 .star {
     position: absolute;
     background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%23FFD700"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>');
@@ -583,7 +569,6 @@ body {
     50% { opacity: 1; transform: scale(1.2); }
 }
 
-/* Responsive styles */
 @media (max-width: 1213px) {
     .content-card {
         max-width: 90%;
@@ -619,7 +604,6 @@ body {
     }
 }
 
-/* Background gradient */
 .background {
     position: fixed;
     top: 0;
@@ -630,7 +614,6 @@ body {
     z-index: -1;
 }
 
-/* Decorative elements */
 .corner-heart {
     position: absolute;
     width: 40px;
@@ -649,7 +632,6 @@ body {
     transform: rotate(135deg);
 }
 
-/* Music toggle */
 .music-toggle {
     position: fixed;
     bottom: 20px;
@@ -661,10 +643,10 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     cursor: pointer;
     z-index: 50;
-    transition: all 0.3s ease;
+    transition: transform 0.3s ease;
 }
 
 .music-toggle:hover {
@@ -676,7 +658,6 @@ body {
     height: 24px;
 }
 
-/* Make the popup frame visible */
 #popup-frame {
     display: block;
 }
