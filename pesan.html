@@ -3,445 +3,101 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ScanFinity - Pink Esthetic Gallery</title>
+    <title>ScanFinity</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.21.2/babel.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        /* Warna tema pink */
-        :root {
-            --pink-light: #ffcfe0;
-            --pink-medium: #ff9ebb;
-            --pink-dark: #ff6b9a;
-            --pink-darker: #ff4980;
-            --pink-darkest: #e02b62;
-        }
-    /* Background gradient pink */
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Poppins:wght@300;400;600;700&display=swap');
+    
+    :root {
+        --pink-light: #ffcfe0;
+        --pink-medium: #ff9ebb;
+        --pink-dark: #ff6b9a;
+        --pink-darker: #ff4980;
+        --pink-darkest: #e02b62;
+        --pink-glow: rgba(255, 107, 154, 0.7);
+        --purple-accent: #9b4dca;
+    }
+    
     body {
-        background: linear-gradient(135deg, var(--pink-light), var(--pink-medium));
-        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        font-family: 'Poppins', sans-serif;
+        background-color: var(--pink-light);
         margin: 0;
         padding: 0;
-        color: white;
         overflow-x: hidden;
     }
-
-    /* CSS untuk tata letak dinamis */
-    .gallery {
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-        grid-auto-rows: 250px; /* Tinggi dasar */
-        gap: 20px;
-        padding: 20px;
-        max-width: 1400px;
-        margin: 0 auto;
-        transition: all 0.5s ease;
-    }
-
-    .gallery-item {
+    
+   
+    .content {
         position: relative;
-        overflow: hidden;
-        border-radius: 20px;
-        box-shadow: 0 10px 25px rgba(255, 107, 154, 0.4);
-        transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        background: var(--pink-medium);
-        cursor: pointer;
-        border: 3px solid transparent;
-        transform-origin: center;
+        z-index: 1;
+        padding-top: 2rem;
     }
-
-    .gallery-item:hover {
-        transform: translateY(-10px) scale(1.05);
-        box-shadow: 0 15px 30px rgba(255, 107, 154, 0.6);
-        border-color: var(--pink-darker);
-        z-index: 10;
-    }
-
-    .gallery-item:active {
-        transform: scale(0.98);
-    }
-
-    .gallery-item img,
-    .gallery-item video {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        display: block;
-        border-radius: 16px;
-        transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
-        filter: brightness(0.9);
-    }
-
-    .gallery-item:hover img,
-    .gallery-item:hover video {
-        transform: scale(1.1);
-        filter: brightness(1.1) contrast(1.1);
-    }
-
-    .gallery-item video {
-        background: #000;
-    }
-
-    /* Efek teks muncul saat hover */
-    .gallery-item .text-overlay {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
+    
+    .main-container {
         display: flex;
         flex-direction: column;
-        justify-content: flex-end;
+        justify-content: center;
         align-items: center;
-        background: linear-gradient(to top, rgba(255, 73, 128, 0.9) 0%, rgba(255, 73, 128, 0) 70%);
-        opacity: 0;
-        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        min-height: 100vh;
         padding: 1rem;
-        text-align: center;
-        transform: translateY(20px);
-        border-radius: 16px;
-    }
-
-    .gallery-item:hover .text-overlay {
-        opacity: 1;
-        transform: translateY(0);
-    }
-
-    .gallery-item .text-overlay h1 {
-        font-size: 1.8rem;
-        font-weight: 700;
-        margin-bottom: 0.7rem;
-        color: white;
-        text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
-        transform: translateY(20px);
-        transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) 0.1s;
-        opacity: 0;
-    }
-
-    .gallery-item .text-overlay p {
-        font-size: 1.1rem;
-        color: white;
-        margin: 0;
-        transform: translateY(20px);
-        transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) 0.2s;
-        text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
-        opacity: 0;
-    }
-
-    .gallery-item:hover .text-overlay h1,
-    .gallery-item:hover .text-overlay p {
-        transform: translateY(0);
-        opacity: 1;
-    }
-
-    /* Ribbon label untuk item */
-    .gallery-item::before {
-        content: attr(data-category);
-        position: absolute;
-        top: 20px;
-        right: -50px;
-        background: var(--pink-darkest);
-        color: white;
-        padding: 5px 40px;
-        transform: rotate(45deg);
-        font-size: 0.8rem;
-        font-weight: bold;
-        z-index: 5;
-        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
-        opacity: 0;
-        transition: opacity 0.3s ease, transform 0.3s ease;
-    }
-
-    .gallery-item:hover::before {
-        opacity: 1;
-        right: -40px;
-    }
-
-    /* Like button pada item gallery */
-    .gallery-item .like-button {
-        position: absolute;
-        top: 15px;
-        left: 15px;
-        background: rgba(255, 255, 255, 0.7);
-        width: 40px;
-        height: 40px;
-        border-radius: 50%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        cursor: pointer;
-        z-index: 10;
-        transform: scale(0);
-        transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
-    }
-
-    .gallery-item:hover .like-button {
-        transform: scale(1);
-    }
-
-    .gallery-item .like-button.active {
-        background: var(--pink-darkest);
-        animation: pulse 0.5s;
-    }
-
-    .gallery-item .like-button svg {
-        width: 20px;
-        height: 20px;
-        fill: var(--pink-darkest);
-        transition: fill 0.3s ease, transform 0.3s ease;
-    }
-
-    .gallery-item .like-button.active svg {
-        fill: white;
-        transform: scale(1.2);
-    }
-
-    @keyframes pulse {
-        0% { transform: scale(1); }
-        50% { transform: scale(1.2); }
-        100% { transform: scale(1); }
-    }
-
-    /* Efek glitter pada gallery item */
-    .gallery-item::after {
-        content: '';
-        position: absolute;
-        width: 150%;
-        height: 150%;
-        top: -25%;
-        left: -25%;
-        background: radial-gradient(circle, rgba(255, 255, 255, 0.8) 0%, rgba(255, 255, 255, 0) 70%);
-        opacity: 0;
-        transition: opacity 0.5s ease;
-        mix-blend-mode: overlay;
-        pointer-events: none;
-    }
-
-    .gallery-item:hover::after {
-        opacity: 0.5;
-        animation: rotate 10s linear infinite;
-    }
-
-    @keyframes rotate {
-        0% { transform: rotate(0deg); }
-        100% { transform: rotate(360deg); }
-    }
-
-    /* Ukuran acak untuk item */
-    .gallery-item[data-size="1"] {
-        grid-row-end: span 1;
-    }
-
-    .gallery-item[data-size="2"] {
-        grid-row-end: span 2;
-    }
-
-    .gallery-item[data-size="3"] {
-        grid-row-end: span 3;
-    }
-
-    /* Featured item yang lebih besar */
-    .gallery-item[data-featured="true"] {
-        grid-column-end: span 2;
-        grid-row-end: span 2;
-    }
-
-    /* Responsif untuk layar kecil */
-    @media (max-width: 640px) {
-        .gallery {
-            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-            grid-auto-rows: 150px;
-            gap: 10px;
-        }
-
-        .gallery-item .text-overlay h1 {
-            font-size: 1.2rem;
-        }
-
-        .gallery-item .text-overlay p {
-            font-size: 0.9rem;
-        }
-        
-        .gallery-item[data-featured="true"] {
-            grid-column-end: span 1;
-            grid-row-end: span 1;
-        }
-    }
-
-    /* Filter buttons */
-    .filter-container {
-        display: flex;
-        justify-content: center;
-        margin: 0 auto 20px;
-        flex-wrap: wrap;
-        max-width: 800px;
-        gap: 10px;
-    }
-
-    .filter-button {
-        background: rgba(255, 255, 255, 0.2);
-        border: 2px solid var(--pink-darkest);
-        color: white;
-        padding: 8px 16px;
-        border-radius: 30px;
-        cursor: pointer;
-        transition: all 0.3s ease;
-        font-weight: 600;
-        box-shadow: 0 4px 10px rgba(224, 43, 98, 0.3);
-    }
-
-    .filter-button:hover {
-        background: var(--pink-darkest);
-        transform: translateY(-3px);
-        box-shadow: 0 6px 15px rgba(224, 43, 98, 0.4);
-    }
-
-    .filter-button.active {
-        background: var(--pink-darkest);
-        transform: translateY(-3px);
-    }
-
-    /* Efek view mode switch */
-    .view-mode-container {
-        display: flex;
-        justify-content: center;
-        margin-bottom: 20px;
-    }
-
-    .view-mode-switch {
-        display: flex;
-        background: rgba(255, 255, 255, 0.2);
-        border-radius: 30px;
-        padding: 5px;
-        box-shadow: 0 4px 10px rgba(224, 43, 98, 0.3);
-    }
-
-    .view-mode-button {
-        padding: 8px 16px;
-        cursor: pointer;
-        border-radius: 25px;
-        transition: all 0.3s ease;
-        color: white;
-        font-weight: 600;
-    }
-
-    .view-mode-button.active {
-        background: var(--pink-darkest);
-        box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
     }
     
-    /* Mengubah tata letak gallery berdasarkan mode */
-    .gallery.list-mode {
-        grid-template-columns: 1fr;
-        grid-auto-rows: auto;
-    }
-
-    .gallery.list-mode .gallery-item {
-        display: flex;
-        flex-direction: row;
-        height: 150px;
-        border-radius: 15px;
-    }
-
-    .gallery.list-mode .gallery-item img,
-    .gallery.list-mode .gallery-item video {
-        width: 150px;
-        height: 150px;
-        border-radius: 12px 0 0 12px;
-    }
-
-    .gallery.list-mode .gallery-item .text-overlay {
+    .content-card {
+        background-color: rgba(255, 255, 255, 0.92);
+        border-radius: 20px;
+        box-shadow: 0 15px 35px rgba(255, 107, 154, 0.4);
+        padding: 2.5rem;
+        width: 100%;
+        max-width: 480px;
+        backdrop-filter: blur(12px);
+        transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        text-align: center;
+        border: 2px solid rgba(255, 255, 255, 0.8);
         position: relative;
-        opacity: 1;
-        background: none;
-        justify-content: center;
-        align-items: flex-start;
-        transform: none;
-        padding: 15px;
-    }
-
-    .gallery.list-mode .gallery-item .text-overlay h1,
-    .gallery.list-mode .gallery-item .text-overlay p {
-        transform: none;
-        opacity: 1;
-        text-align: left;
-        color: var(--pink-darkest);
-        text-shadow: none;
-    }
-
-    .gallery.list-mode .gallery-item .text-overlay h1 {
-        font-size: 1.2rem;
-        margin-bottom: 5px;
-    }
-
-    .gallery.list-mode .gallery-item .text-overlay p {
-        font-size: 0.9rem;
-        color: #333;
-    }
-
-    .gallery.list-mode .gallery-item::before {
-        display: none;
     }
     
-    /* Gallery loading animation */
-    @keyframes fadeIn {
-        0% { opacity: 0; transform: translateY(20px); }
-        100% { opacity: 1; transform: translateY(0); }
+    .content-card:hover {
+        transform: translateY(-8px) scale(1.02);
+        box-shadow: 0 20px 40px rgba(255, 107, 154, 0.6), 0 0 30px var(--pink-glow);
     }
     
-    .gallery-item {
-        animation: fadeIn 0.5s backwards;
-    }
-    
-    .gallery-item:nth-child(1) { animation-delay: 0.1s; }
-    .gallery-item:nth-child(2) { animation-delay: 0.2s; }
-    .gallery-item:nth-child(3) { animation-delay: 0.3s; }
-    .gallery-item:nth-child(4) { animation-delay: 0.4s; }
-    .gallery-item:nth-child(5) { animation-delay: 0.5s; }
-    .gallery-item:nth-child(6) { animation-delay: 0.6s; }
-    .gallery-item:nth-child(7) { animation-delay: 0.7s; }
-    .gallery-item:nth-child(8) { animation-delay: 0.8s; }
-
-    /* Judul dengan efek gradien pink */
-    .title {
-        font-size: 3rem;
+    .welcome-heading {
+        font-size: 2.4rem;
         font-weight: 700;
-        text-align: center;
-        margin: 2rem 0;
-        background: linear-gradient(135deg, var(--pink-dark), var(--pink-darkest));
+        background: linear-gradient(to right, var(--pink-dark), var(--pink-light));
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
-        animation: glow 2s infinite alternate;
+        margin-bottom: 1.5rem;
     }
-
-    @keyframes glow {
-        0% { text-shadow: 0 0 10px var(--pink-dark), 0 0 20px var(--pink-darkest); }
-        100% { text-shadow: 0 0 20px var(--pink-darkest), 0 0 40px var(--pink-dark); }
+    
+    .welcome-text {
+        font-size: 1.1rem;
+        color: #555;
+        margin-bottom: 2rem;
     }
-
-    /* Efek latar belakang animasi */
-    .background-effect {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        z-index: -1;
-        background: radial-gradient(circle, rgba(255, 107, 154, 0.1), rgba(255, 107, 154, 0.2));
-        animation: background-pulse 5s infinite alternate;
+    
+    .glitter {
+        position: absolute;
+        width: 8px;
+        height: 8px;
+        background-color: white;
+        border-radius: 50%;
+        opacity: 0.6;
+        animation: glitter 6s infinite linear;
+        z-index: 5;
     }
-
-    @keyframes background-pulse {
-        0% { transform: scale(1); opacity: 0.5; }
-        100% { transform: scale(1.2); opacity: 1; }
+    
+    @keyframes glitter {
+        0% { transform: translateY(0) scale(0); opacity: 0; }
+        50% { transform: translateY(-100px) scale(1); opacity: 0.8; }
+        100% { transform: translateY(-200px) scale(0); opacity: 0; }
     }
-
-    /* Efek hati */
-  
-
+    
     /* Navbar Icons - Versi yang Lebih Responsif */
     .navbar {
         position: fixed;
@@ -660,214 +316,705 @@
             display: inline-block;
         }
     }
+
+    /* Love message styling */
+    .love-message {
+        font-size: 1.25rem;
+        line-height: 1.8;
+        margin-bottom: 1.5rem;
+        color: #444;
+        position: relative;
+    }
+    
+    .message-highlight {
+        color: var(--pink-darkest);
+        font-weight: 600;
+        position: relative;
+        display: inline-block;
+        z-index: 1;
+        transition: all 0.3s ease;
+    }
+    
+    .message-highlight::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: -2px;
+        right: -2px;
+        height: 30%;
+        background-color: rgba(255, 107, 154, 0.2);
+        z-index: -1;
+        transition: height 0.3s ease;
+    }
+    
+    .message-highlight:hover::after {
+        height: 100%;
+        background-color: rgba(255, 107, 154, 0.3);
+    }
+    
+    .love-signature {
+        font-family: 'Dancing Script', cursive;
+        font-size: 2.2rem;
+        font-weight: 700;
+        background: linear-gradient(45deg, var(--pink-darkest), var(--pink-light));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        margin-top: 2rem;
+        position: relative;
+        display: inline-block;
+    }
+    
+    .heart-beat {
+        display: inline-block;
+        animation: heartbeat 1.5s infinite;
+        transform-origin: center;
+        cursor: pointer;
+        font-size: 1.8rem;
+        margin-left: 0.5rem;
+        position: relative;
+        vertical-align: middle;
+    }
+    
+    @keyframes heartbeat {
+        0% { transform: scale(1); }
+        14% { transform: scale(1.3); }
+        28% { transform: scale(1); }
+        42% { transform: scale(1.3); }
+        70% { transform: scale(1); }
+    }
+    
+    .floating-heart {
+        position: absolute;
+        font-size: 1.4rem;
+        animation: float-up 2s ease-out forwards;
+        opacity: 0;
+    }
+    
+    @keyframes float-up {
+        0% { transform: translateY(0); opacity: 0; }
+        20% { opacity: 1; }
+        100% { transform: translateY(-100px) scale(0.5); opacity: 0; }
+    }
+    
+    .love-btn {
+        background: linear-gradient(45deg, var(--pink-dark), var(--pink-darker));
+        color: white;
+        border: none;
+        padding: 0.9rem 1.8rem;
+        font-size: 1.1rem;
+        border-radius: 50px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        box-shadow: 0 6px 20px rgba(255, 107, 154, 0.4);
+        margin-top: 1.2rem;
+        position: relative;
+        overflow: hidden;
+        font-weight: 600;
+    }
+    
+    .love-btn::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(
+            to right,
+            rgba(255, 255, 255, 0) 0%,
+            rgba(255, 255, 255, 0.3) 50%,
+            rgba(255, 255, 255, 0) 100%
+        );
+        transition: left 0.7s ease;
+    }
+    
+    .love-btn:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 25px rgba(224, 43, 98, 0.6);
+    }
+    
+    .love-btn:hover::before {
+        left: 100%;
+    }
+    
+    .envelope {
+        position: relative;
+        width: 100%;
+        max-width: 320px;
+        height: 200px;
+        margin: 2rem auto 1rem;
+        perspective: 1000px;
+        transform-style: preserve-3d;
+        cursor: pointer;
+    }
+    
+    .envelope-front {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: var(--pink-medium);
+        border-radius: 10px;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        transform-origin: top;
+        transition: transform 0.8s ease;
+        z-index: 2;
+    }
+    
+    .envelope-message {
+        position: absolute;
+        top: 10px;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: white;
+        border-radius: 8px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 1rem;
+        transform: translateY(-5px);
+        opacity: 0;
+        transition: all 0.5s ease;
+        z-index: 1;
+    }
+    
+    .envelope.open .envelope-front {
+        transform: rotateX(110deg);
+    }
+    
+    .envelope.open .envelope-message {
+        transform: translateY(10px);
+        opacity: 1;
+        transition-delay: 0.4s;
+    }
+    
+    .envelope-heart {
+        font-size: 3rem;
+        color: white;
+        filter: drop-shadow(0 2px 5px rgba(0,0,0,0.2));
+    }
+    
+    .message-text {
+        font-family: 'Dancing Script', cursive;
+        font-size: 1.4rem;
+        color: var(--pink-darkest);
+        text-align: center;
+    }
+    
+    .photos-container {
+        display: flex;
+        overflow-x: auto;
+        scroll-snap-type: x mandatory;
+        gap: 1rem;
+        padding: 1rem 0;
+        margin: 1.5rem 0;
+        scrollbar-width: thin;
+        scrollbar-color: var(--pink-medium) transparent;
+    }
+    
+    .photos-container::-webkit-scrollbar {
+        height: 6px;
+    }
+    
+    .photos-container::-webkit-scrollbar-thumb {
+        background-color: var(--pink-medium);
+        border-radius: 6px;
+    }
+    
+    .photo-frame {
+        flex: 0 0 auto;
+        width: 150px;
+        height: 150px;
+        border-radius: 10px;
+        background-color: #f8f8f8;
+        overflow: hidden;
+        scroll-snap-align: start;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        position: relative;
+        transform: rotate(-3deg);
+        transition: all 0.3s ease;
+        border: 3px solid white;
+    }
+    
+    .photo-frame:nth-child(2n) {
+        transform: rotate(3deg);
+    }
+    
+    .photo-frame:hover {
+        transform: scale(1.1) rotate(0);
+        z-index: 5;
+        box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+    }
+    
+    .photo {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+    
+    .photo-placeholder {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(45deg, #f3f3f3, #e6e6e6);
+        color: var(--pink-dark);
+        font-size: 2rem;
+    }
+    
+    /* Star effect */
+    .star {
+        position: absolute;
+        background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%23FFD700"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>');
+        background-size: contain;
+        width: 15px;
+        height: 15px;
+        animation: twinkle 4s linear infinite;
+    }
+    
+    @keyframes twinkle {
+        0%, 100% { opacity: 0.2; transform: scale(0.8); }
+        50% { opacity: 1; transform: scale(1.2); }
+    }
+    
+    /* Responsive styles */
+    @media (max-width: 1213px) {
+        .content-card {
+            max-width: 90%;
+            padding: 2rem;
+        }
+        
+        .content {
+            padding: 1rem;
+        }
+    }
+    
+    @media (max-width: 640px) {
+        .content-card {
+            padding: 1.8rem;
+            max-width: 95%;
+        }
+        
+        .welcome-heading {
+            font-size: 2rem;
+        }
+        
+        .love-message {
+            font-size: 1.1rem;
+        }
+        
+        .love-signature {
+            font-size: 1.8rem;
+        }
+        
+        .envelope {
+            max-width: 280px;
+            height: 180px;
+        }
+    }
+    
+    /* Background gradient */
+    .background {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(135deg, #ffe6f0 0%, #ffb6c1 100%);
+        z-index: -1;
+    }
+    
+    /* Decorative elements */
+    .corner-heart {
+        position: absolute;
+        width: 40px;
+        height: 40px;
+    }
+    
+    .top-left {
+        top: -20px;
+        left: -20px;
+        transform: rotate(-45deg);
+    }
+    
+    .bottom-right {
+        bottom: -20px;
+        right: -20px;
+        transform: rotate(135deg);
+    }
+    
+    /* Music toggle */
+    .music-toggle {
+        position: fixed;
+        bottom: 20px;
+        left: 20px;
+        width: 40px;
+        height: 40px;
+        background-color: white;
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        cursor: pointer;
+        z-index: 50;
+        transition: all 0.3s ease;
+    }
+    
+    .music-toggle:hover {
+        transform: scale(1.1);
+    }
+    
+    .music-icon {
+        width: 24px;
+        height: 24px;
+    }
+    
+    /* Make the popup frame visible */
+    #popup-frame {
+        display: block;
+    }
 </style>
 </head>
 <body>
     <div id="root"></div>
-    <div className="background-effect"></div>
+    <!-- Popup iframe - now visible by default -->
     <iframe src="popup.html" style="border: none; position: fixed; bottom: 0; right: 0; width: 200px; height: 300px; z-index: 9999; background: transparent; pointer-events: all;" id="popup-frame"></iframe>
-    <script>
-        // Kode untuk menangani komunikasi dengan iframe
-        window.addEventListener('message', function(event) {
-            // Pastikan pesan berasal dari iframe popup
-            if (event.data && event.data.action) {
-                switch(event.data.action) {
-                    case 'navigate':
-                        // Navigasi ke halaman yang dipilih
-                        window.location.href = event.data.data;
-                        break;
-                    case 'ready':
-                        console.log('Pop-up menu siap');
-                        break;
-                }
+    
+   <script>
+    // Kode untuk menangani komunikasi dengan iframe
+    window.addEventListener('message', function(event) {
+        // Pastikan pesan berasal dari iframe popup
+        if (event.data && event.data.action) {
+            switch(event.data.action) {
+                case 'navigate':
+                    // Navigasi ke halaman yang dipilih
+                    window.location.href = event.data.data;
+                    break;
+                case 'ready':
+                    console.log('Pop-up menu siap');
+                    break;
             }
-        });
-    </script>
+        }
+    });
+</script>
 
-    <script type="text/babel">
-       
-        
-        // Komponen Navbar
-        const Navbar = () => {
-            return (
-                <nav className="navbar">
-                    <a href="#" className="navbar-brand">ScanFinity</a>
-                    <div className="navbar-icons">
-                        <a href="layout.html" className="nav-icon home-icon" title="Home">
-                            <i className="fas fa-home"></i>
-                            <span className="icon-label">Home</span>
-                        </a>
-                        <a href="https://www.instagram.com/scanfinity?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank" className="nav-icon ig-icon" title="Instagram">
-                            <i className="fab fa-instagram"></i>
-                            <span className="icon-label">Instagram</span>
-                        </a>
-                    </div>
-                </nav>
-            );
+<script type="text/babel">
+    // Komponen Heart (Hati)
+    const Heart = ({ id }) => {
+        const style = {
+            top: `${Math.random() * 100}%`,
+            left: `${Math.random() * 100}%`,
+            animationDelay: `${Math.random() * 10}s`,
+            animationDuration: `${15 + Math.random() * 10}s`,
+            transform: `scale(${0.5 + Math.random() * 1})`,
+            opacity: 0.6 + Math.random() * 0.4,
         };
-
-        // Like Button SVG
-        const HeartIcon = ({ filled }) => (
-            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
-            </svg>
+        
+        return <div className="heart" style={style}></div>;
+    };
+    
+    // Komponen Glitter untuk efek kilau
+    const Glitter = ({ id }) => {
+        const style = {
+            top: `${Math.random() * 100}%`,
+            left: `${Math.random() * 100}%`,
+            animationDelay: `${Math.random() * 5}s`,
+            opacity: 0.4 + Math.random() * 0.4,
+        };
+        
+        return <div className="glitter" style={style}></div>;
+    };
+    
+    // Star component
+    const Star = ({ id }) => {
+        const style = {
+            top: `${Math.random() * 100}%`,
+            left: `${Math.random() * 100}%`,
+            animationDelay: `${Math.random() * 4}s`,
+            opacity: 0.4 + Math.random() * 0.4,
+        };
+        
+        return <div className="star" style={style}></div>;
+    };
+    
+    // Komponen Navbar dengan Label pada Ikon
+    const Navbar = () => {
+        return (
+            <nav className="navbar">
+                <a href="#" className="navbar-brand">ScanFinity</a>
+                <div className="navbar-icons">
+                    <a href="layout.html" className="nav-icon home-icon" title="Home">
+                        <i className="fas fa-home"></i>
+                        <span className="icon-label">Home</span>
+                    </a>
+                    <a href="https://www.instagram.com/scanfinity?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank" className="nav-icon ig-icon" title="Instagram">
+                        <i className="fab fa-instagram"></i>
+                        <span className="icon-label">Instagram</span>
+                    </a>
+                </div>
+            </nav>
         );
-
-        // Komponen Gallery yang ditingkatkan
-        const Gallery = () => {
-            // Data foto dan video dengan ukuran acak dan kategori
-            const mediaItems = [
-                { type: 'image', src: './foto/1.jpg', alt: 'Foto 1', size: 2, title: 'Pink Dream', description: 'Estetika pink yang menenangkan jiwa.', category: 'Aesthetic', featured: true, likes: 243 },
-                { type: 'video', src: 'https://www.w3schools.com/html/mov_bbb.mp4', alt: 'Video 1', size: 1, title: 'Sweet Moments', description: 'Kenangan indah dalam balutan merah muda.', category: 'Moment', featured: false, likes: 156 },
-                { type: 'image', src: './foto/2.jpg', alt: 'Foto 2', size: 1, title: 'Rosy Delight', description: 'Kecantikan dalam kesederhanaan warna.', category: 'Aesthetic', featured: false, likes: 187 },
-                { type: 'video', src: 'https://www.w3schools.com/html/mov_bbb.mp4', alt: 'Video 2', size: 2, title: 'Pink Paradise', description: 'Surga kecil dalam nuansa merah muda.', category: 'Travel', featured: false, likes: 321 },
-                { type: 'image', src: './foto/3.jpg', alt: 'Foto 3', size: 3, title: 'Blush Tone', description: 'Kehalusan warna yang membuat hati berbunga.', category: 'Fashion', featured: false, likes: 178 },
-                { type: 'video', src: 'https://www.w3schools.com/html/mov_bbb.mp4', alt: 'Video 3', size: 1, title: 'Tender Love', description: 'Kasih sayang dalam sentuhan lembut.', category: 'Moment', featured: false, likes: 264 },
-                { type: 'image', src: './foto/4.jpg', alt: 'Foto 4', size: 2, title: 'Cotton Candy', description: 'Manis seperti permen kapas di sore hari.', category: 'Food', featured: false, likes: 149 },
-                { type: 'video', src: 'https://www.w3schools.com/html/mov_bbb.mp4', alt: 'Video 4', size: 2, title: 'Rose Petal', description: 'Lembut seperti kelopak mawar yang bermekaran.', category: 'Nature', featured: false, likes: 290 },
-            ];
-            
-            // State untuk memantau item yang disukai, filter aktif, dan mode tampilan
-            const [likedItems, setLikedItems] = React.useState({});
-            const [activeFilter, setActiveFilter] = React.useState('All');
-            const [viewMode, setViewMode] = React.useState('grid');
-            
-            // Kategori unik untuk filter
-            const categories = ['All', ...new Set(mediaItems.map(item => item.category))];
-            
-            // Fungsi untuk memutar video saat masuk viewport
-            const handleVideoPlay = (entries, observer) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.play();
-                    } else {
-                        entry.target.pause();
-                    }
-                });
-            };
-
-            // Intersection Observer untuk video
-            React.useEffect(() => {
-                const observer = new IntersectionObserver(handleVideoPlay, {
-                    root: null,
-                    rootMargin:                     '0px',
-                    threshold: 0.5,
-                });
-
-                const videoElements = document.querySelectorAll('.gallery-item video');
-                videoElements.forEach(video => observer.observe(video));
-
-                return () => {
-                    videoElements.forEach(video => observer.unobserve(video));
-                };
-            }, []);
-            
-            // Fungsi untuk menangani klik tombol suka
-            const handleLikeClick = (index, event) => {
-                event.stopPropagation();
-                setLikedItems(prev => ({
-                    ...prev,
-                    [index]: !prev[index]
-                }));
-            };
-            
-            // Filter item berdasarkan kategori
-            const filteredItems = activeFilter === 'All' 
-                ? mediaItems 
-                : mediaItems.filter(item => item.category === activeFilter);
-                
-            return (
-                <React.Fragment>
-                    {/* Filter buttons */}
-                    <div className="filter-container">
-                        {categories.map(category => (
-                            <button 
-                                key={category} 
-                                className={`filter-button ${activeFilter === category ? 'active' : ''}`}
-                                onClick={() => setActiveFilter(category)}
-                            >
-                                {category}
-                            </button>
-                        ))}
-                    </div>
-                    
-                    {/* View mode switch */}
-                    <div className="view-mode-container">
-                        <div className="view-mode-switch">
-                            <div 
-                                className={`view-mode-button ${viewMode === 'grid' ? 'active' : ''}`}
-                                onClick={() => setViewMode('grid')}
-                            >
-                                Grid
-                            </div>
-                            <div 
-                                className={`view-mode-button ${viewMode === 'list' ? 'active' : ''}`}
-                                onClick={() => setViewMode('list')}
-                            >
-                                List
-                            </div>
+    };
+    
+    const PhotoGallery = () => {
+        // Array of image dimensions for placeholder images
+        const dimensions = [
+            '1.jpg',
+            '2.jpg',
+            '3.jpg',
+            '4.jpg',
+            '5.jpg',
+            '6.jpg',
+            '7.jpg',
+            '8.jpg',
+            '9.jpg',
+        ];
+        
+        return (
+            <div className="photos-container">
+                {dimensions.map((dimension, index) => (
+                    <div key={index} className="photo-frame">
+                        <div className="photo-placeholder">
+                            <img 
+                                src={`./foto/${dimension}`} 
+                                alt={`Photo ${index + 1}`}
+                                className="photo-image"
+                            />
                         </div>
                     </div>
-                    
-                    {/* Gallery dengan mode yang dapat diubah */}
-                    <div className={`gallery ${viewMode === 'list' ? 'list-mode' : ''}`}>
-                        {filteredItems.map((item, index) => (
-                            <div
-                                key={index}
-                                className="gallery-item"
-                                data-size={item.size}
-                                data-category={item.category}
-                                data-featured={item.featured}
-                            >
-                                {item.type === 'image' ? (
-                                    <img src={item.src} alt={item.alt} loading="lazy" />
-                                ) : (
-                                    <video
-                                        src={item.src}
-                                        alt={item.alt}
-                                        muted
-                                        loop
-                                        playsInline
-                                    />
-                                )}
-                                <div className="text-overlay">
-                                    <h1>{item.title}</h1>
-                                    <p>{item.description}</p>
-                                </div>
-                                {/* Like button */}
-                                <div 
-                                    className={`like-button ${likedItems[index] ? 'active' : ''}`}
-                                    onClick={(e) => handleLikeClick(index, e)}
-                                >
-                                    <HeartIcon filled={likedItems[index]} />
-                                </div>
-                            </div>
-                        ))}
-                    </div>
-                </React.Fragment>
-            );
+                ))}
+            </div>
+        );
+    };
+    
+    // Komponen Envelope (Amplop Surat)
+    const Envelope = () => {
+        const [isOpen, setIsOpen] = React.useState(false);
+        
+        const toggleEnvelope = () => {
+            setIsOpen(!isOpen);
         };
-
-        // Komponen Utama
-        const App = () => {
-
-            return (
-                <div className="min-h-screen">
-                    <div className="background-effect"></div>
-                    <Navbar />
-                    
-                  
-                    
-                    <div className="main-container">
-                        <h1 className="title">Gallery kita</h1>
-                        <Gallery />
-                    </div>
+        
+        return (
+            <div className={`envelope ${isOpen ? 'open' : ''}`} onClick={toggleEnvelope}>
+                <div className="envelope-front">
+                    <div className="envelope-heart">❤️</div>
                 </div>
-            );
+                <div className="envelope-message">
+                    <p className="message-text">
+                        "Kamu adalah impian yang menjadi kenyataan. Terima kasih telah memberikan warna dalam hidupku. Aku cinta kamu selamanya."
+                    </p>
+                </div>
+            </div>
+        );
+    };
+    
+    // Komponen HeartButton (dengan efek)
+    const HeartButton = () => {
+        const [hearts, setHearts] = React.useState([]);
+        
+        const addHeart = (e) => {
+            const rect = e.target.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            
+            const newHeart = {
+                id: Date.now(),
+                x,
+                y,
+                color: `hsl(${Math.random() * 30 + 340}, 100%, 65%)`
+            };
+            
+            setHearts([...hearts, newHeart]);
+            
+            // Hapus hati setelah animasi selesai
+            setTimeout(() => {
+                setHearts(hearts => hearts.filter(h => h.id !== newHeart.id));
+            }, 2000);
         };
+        
+        return (
+            <div style={{ position: 'relative', display: 'inline-block' }}>
+                <span className="heart-beat" onClick={addHeart}>❤️</span>
+                {hearts.map(heart => (
+                    <span 
+                        key={heart.id}
+                        className="floating-heart"
+                        style={{
+                            left: `${heart.x}px`,
+                            top: `${heart.y}px`,
+                            color: heart.color
+                        }}
+                    >
+                        ❤️
+                    </span>
+                ))}
+            </div>
+        );
+    };
+    
+    // Komponen MusicToggle
+    const MusicToggle = () => {
+        const [isPlaying, setIsPlaying] = React.useState(false);
+        const audioRef = React.useRef(null);
+        
+        React.useEffect(() => {
+            // Create audio element (in real app, you'd add an actual music file)
+            audioRef.current = new Audio();
+            audioRef.current.loop = true;
+            
+            return () => {
+                if (audioRef.current) {
+                    audioRef.current.pause();
+                    audioRef.current = null;
+                }
+            };
+        }, []);
+        
+        const toggleMusic = () => {
+            if (isPlaying) {
+                audioRef.current.pause();
+            } else {
+                // In real app, you'd set a source and play
+                // audioRef.current.play();
+            }
+            setIsPlaying(!isPlaying);
+        };
+        
+        return (
+            <div className="music-toggle" onClick={toggleMusic}>
+                <div className="music-icon">
+                    {isPlaying ? '🔊' : '🔇'}
+                </div>
+            </div>
+        );
+    };
+    
+    // Komponen pesan cinta
+    const LoveMessage = () => {
+        const [showMore, setShowMore] = React.useState(false);
+        const [messageIndex, setMessageIndex] = React.useState(0);
+        const contentRef = React.useRef(null);
+        
+        const loveMessages = [
+                            "Setiap detik bersamamu adalah hadiah terindah yang pernah kuterima. Senyummu bagaikan matahari yang menyinari hariku, dan tawamu adalah melodi termerdu yang pernah kudengar.",
+            "Cintaku padamu seperti bintang di langit, tak terhitung jumlahnya dan abadi selamanya. Tanpamu, hidupku bagaikan langit tanpa pelangi.",
+            "Kamu adalah alasan mengapa hatiku berdetak lebih cepat dan alasan mengapa aku tersenyum setiap pagi. Bersamamu, aku menemukan rumah dalam pelukan."
+        ];
+        
+        const nextMessage = () => {
+            setMessageIndex((prev) => (prev + 1) % loveMessages.length);
+            
+            if (contentRef.current) {
+                // Animasi fade-out/fade-in sederhana
+                const element = contentRef.current;
+                element.style.opacity = 0;
+                
+                setTimeout(() => {
+                    element.style.opacity = 1;
+                }, 300);
+            }
+        };
+        
+        // Ref untuk elemen content card
+        const cardRef = React.useRef(null);
+        
+        // Effect untuk animasi entrance
+        React.useEffect(() => {
+            if (cardRef.current) {
+                cardRef.current.style.opacity = 0;
+                cardRef.current.style.transform = 'translateY(50px)';
+                
+                setTimeout(() => {
+                    cardRef.current.style.transition = 'all 1s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
+                    cardRef.current.style.opacity = 1;
+                    cardRef.current.style.transform = 'translateY(0)';
+                }, 300);
+            }
+        }, []);
+        
+        return (
+            <div className="content-card" ref={cardRef}>
+                <div className="corner-heart top-left heart"></div>
+                <div className="corner-heart bottom-right heart"></div>
+                
+                <h1 className="welcome-heading">
+                    Untuk Seseorang Yang Teristimewa 
+                    <HeartButton />
+                </h1>
+                
+                <div ref={contentRef} style={{ transition: 'opacity 0.3s ease' }}>
+                    <p className="love-message">
+                        {loveMessages[messageIndex].split(' ').map((word, index) => {
+                            return index % 5 === 0 ? 
+                                <span key={index} className="message-highlight">{word} </span> : 
+                                <span key={index}>{word} </span>;
+                        })}
+                    </p>
+                    
+                    <button className="love-btn" onClick={nextMessage}>
+                        Pesan Cinta Lainnya
+                    </button>
+                </div>
+                
+                {showMore && (
+                    <>
+                        <Envelope />
+                        
+                        <div className="mt-6">
+                            <h3 className="text-lg font-semibold text-pink-600 mb-2">Kenangan Indah Kita</h3>
+                            <PhotoGallery />
+                        </div>
+                        
+                        <button className="love-btn mt-4" onClick={() => setShowMore(false)}>
+                            Sembunyikan
+                        </button>
+                    </>
+                )}
+                
+                {!showMore && (
+                    <button className="love-btn mt-4" onClick={() => setShowMore(true)}>
+                        Lihat Kejutan Spesial
+                    </button>
+                )}
+                
+                <div className="love-signature">
+                    Dengan Segenap Cinta
+                </div>
+            </div>
+        );
+    };
+    
+    // Main App component
+    const App = () => {
+        // Create more hearts and glitters for background effects
+        const hearts = Array.from({ length: 30 }, (_, i) => <Heart key={`heart-${i}`} id={i} />);
+        const glitters = Array.from({ length: 50 }, (_, i) => <Glitter key={`glitter-${i}`} id={i} />);
+        const stars = Array.from({ length: 30 }, (_, i) => <Star key={`star-${i}`} id={i} />);
+        
+        return (
+            <div className="min-h-screen">
+                <div className="background"></div>
+                <Navbar />
+                
 
-        // Render aplikasi
-        ReactDOM.render(<App />, document.getElementById('root'));
-    </script>
+                
+                <div className="main-container">
+                    <LoveMessage />
+                </div>
+            </div>
+        );
+    };
+    
+    // Render application
+    ReactDOM.render(<App />, document.getElementById('root'));
+</script>
 </body>
 </html>
