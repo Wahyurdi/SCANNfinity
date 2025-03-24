@@ -29,52 +29,7 @@
         width: 100%; /* Pastikan body tidak lebih lebar dari viewport */
     }
     
-    .heart {
-        position: absolute;
-        width: 30px;
-        height: 30px;
-        background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%23ff6b9a"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>');
-        background-size: contain;
-        background-repeat: no-repeat;
-        animation: float 15s linear infinite;
-        opacity: 0.8;
-        z-index: 10;
-        filter: drop-shadow(0 0 5px rgba(255, 107, 154, 0.5));
-    }
-    
-    @keyframes float {
-        0% {
-            transform: translate(0, 0) rotate(0deg) scale(0.8);
-        }
-        25% {
-            transform: translate(100px, -150px) rotate(45deg) scale(1);
-        }
-        50% {
-            transform: translate(200px, -50px) rotate(90deg) scale(0.9);
-        }
-        75% {
-            transform: translate(100px, 100px) rotate(135deg) scale(1.1);
-        }
-        100% {
-            transform: translate(0, 0) rotate(180deg) scale(0.8);
-        }
-    }
-    
-    .heart:nth-child(2n) {
-        animation-duration: 20s;
-        animation-delay: 2s;
-    }
-    
-    .heart:nth-child(3n) {
-        animation-duration: 18s;
-        animation-delay: 5s;
-    }
-    
-    .heart:nth-child(4n) {
-        animation-duration: 12s;
-        animation-delay: 1s;
-        filter: drop-shadow(0 0 8px rgba(255, 107, 154, 0.7));
-    }
+   
     
     .content {
         position: relative;
@@ -142,7 +97,6 @@
         100% { transform: translateY(-200px) scale(0); opacity: 0; }
     }
     
-    /* Navbar Icons - Versi yang Lebih Responsif */
     .navbar {
         position: fixed;
         top: 0;
@@ -152,7 +106,7 @@
         backdrop-filter: blur(10px);
         box-shadow: 0 2px 10px rgba(255, 107, 154, 0.2);
         z-index: 100;
-        padding: 0.5rem 1rem; /* Ubah padding untuk responsivitas */
+        padding: 0.5rem 1rem; /* Mengurangi padding untuk responsivitas */
         display: flex;
         justify-content: space-between;
         align-items: center;
@@ -880,32 +834,7 @@
 </script>
 
 <script type="text/babel">
-    // Komponen Heart (Hati)
-    const Heart = ({ id }) => {
-        const style = {
-            top: `${Math.random() * 100}%`,
-            left: `${Math.random() * 100}%`,
-            animationDelay: `${Math.random() * 10}s`,
-            animationDuration: `${15 + Math.random() * 10}s`,
-            transform: `scale(${0.5 + Math.random() * 1})`,
-            opacity: 0.6 + Math.random() * 0.4,
-        };
-        
-        return <div className="heart" style={style}></div>;
-    };
-    
-    // Komponen Glitter untuk efek kilau
-    const Glitter = ({ id }) => {
-        const style = {
-            top: `${Math.random() * 100}%`,
-            left: `${Math.random() * 100}%`,
-            animationDelay: `${Math.random() * 5}s`,
-            opacity: 0.4 + Math.random() * 0.4,
-        };
-        
-        return <div className="glitter" style={style}></div>;
-    };
-    
+   
     // Komponen Confetti untuk animasi kemenangan
     const Confetti = ({ count = 50 }) => {
         return (
@@ -1350,10 +1279,7 @@
     
     // Main App component
     const App = () => {
-        // Create hearts and glitters for background effects
-        const hearts = Array.from({ length: 20 }, (_, i) => <Heart key={i} id={i} />);
-        const glitters = Array.from({ length: 40 }, (_, i) => <Glitter key={i} id={i} />);
-        
+       
         return (
             <div className="min-h-screen">
                 <div className="background"></div>
