@@ -96,214 +96,223 @@ body {
     100% { transform: translateY(-200px) scale(0); opacity: 0; }
 }
 
-.navbar {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    background-color: rgba(255, 255, 255, 0.9);
-    backdrop-filter: blur(10px);
-    box-shadow: 0 2px 10px rgba(255, 107, 154, 0.2);
-    z-index: 100;
-    padding: 0.5rem 1rem;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    transition: all 0.3s ease;
-}
-
-.navbar-brand {
-    font-size: 1.5rem;
-    font-weight: 700;
-    color: var(--pink-dark);
-    text-decoration: none;
-    transition: color 0.3s ease;
-}
-
-.navbar-icons {
-    display: flex;
-    align-items: center;
-    gap: 1.5rem;
-}
-
-.nav-icon {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 38px;
-    height: 38px;
-    border-radius: 50%;
-    background: linear-gradient(45deg, var(--pink-dark), var(--pink-medium));
-    color: white;
-    text-decoration: none;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    box-shadow: 0 3px 10px rgba(255, 107, 154, 0.3);
-    position: relative;
-    overflow: hidden;
-}
-
-.nav-icon i {
-    font-size: 1.2rem;
-    transition: transform 0.3s ease;
-    z-index: 2;
-}
-
-.nav-icon::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: rgba(255, 255, 255, 0.2);
-    transition: left 0.4s ease;
-    z-index: 1;
-}
-
-.nav-icon:hover::before {
-    left: 100%;
-}
-
-.nav-icon:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 6px 15px rgba(255, 107, 154, 0.5);
-}
-
-.nav-icon:active {
-    transform: translateY(0);
-    box-shadow: 0 3px 8px rgba(255, 107, 154, 0.4);
-}
-
-.home-icon:hover {
-    background: linear-gradient(45deg, var(--pink-darkest), var(--pink-dark));
-}
-
-.ig-icon:hover {
-    background: linear-gradient(45deg, #833AB4, #FD1D1D, #FCAF45);
-}
-
-.nav-icon .icon-label {
-    display: none;
-    margin-left: 8px;
-    font-size: 0.85rem;
-    font-weight: 600;
-    color: white;
-}
-
-@keyframes pulse {
-    0% { transform: scale(1); }
-    50% { transform: scale(1.15); }
-    100% { transform: scale(1); }
-}
-
-.navbar.scrolled {
-    padding: 0.3rem 1rem;
-    background-color: rgba(255, 255, 255, 0.95);
-    box-shadow: 0 3px 10px rgba(255, 107, 154, 0.3);
-}
-
-@media screen and (min-width: 992px) {
-    .nav-icon:hover i {
-        animation: pulse 1s infinite;
+  .navbar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        background-color: rgba(255, 255, 255, 0.9);
+        backdrop-filter: blur(10px);
+        box-shadow: 0 2px 10px rgba(255, 107, 154, 0.2);
+        z-index: 100;
+        padding: 0.5rem 1rem; /* Mengurangi padding untuk responsivitas */
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        transition: all 0.3s ease;
     }
-    
-    .navbar-brand:hover {
-        color: var(--pink-darker);
-        transform: translateY(-2px);
-    }
-}
 
-@media screen and (min-width: 768px) and (max-width: 991px) {
-    .navbar {
-        padding: 0.5rem 1.5rem;
-    }
-    
-    .nav-icon {
-        width: 36px;
-        height: 36px;
-    }
-    
-    .nav-icon i {
-        font-size: 1.1rem;
-    }
-}
-
-@media screen and (min-width: 576px) and (max-width: 767px) {
-    .navbar {
-        padding: 0.4rem 1rem;
-    }
-    
     .navbar-brand {
-        font-size: 1.3rem;
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: var(--pink-dark);
+        text-decoration: none;
+        transition: all 0.3s ease;
     }
-    
-    .nav-icon {
-        width: 34px;
-        height: 34px;
-    }
-    
-    .nav-icon i {
-        font-size: 1rem;
-    }
-    
+
     .navbar-icons {
-        gap: 0.8rem;
+        display: flex;
+        align-items: center;
+        gap: 1.5rem;
+        transition: all 0.3s ease;
     }
-}
 
-@media screen and (max-width: 575px) {
-    .navbar {
-        padding: 0.3rem 0.8rem;
-    }
-    
-    .navbar-brand {
-        font-size: 1.2rem;
-        max-width: 150px;
-        white-space: nowrap;
+    .nav-icon {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 38px;
+        height: 38px;
+        border-radius: 50%;
+        background: linear-gradient(45deg, var(--pink-dark), var(--pink-medium));
+        color: white;
+        text-decoration: none;
+        transition: all 0.3s ease;
+        box-shadow: 0 3px 10px rgba(255, 107, 154, 0.3);
+        position: relative;
         overflow: hidden;
-        text-overflow: ellipsis;
     }
-    
-    .nav-icon {
-        width: 32px;
-        height: 32px;
-    }
-    
-    .nav-icon i {
-        font-size: 0.9rem;
-    }
-    
-    .navbar-icons {
-        gap: 0.6rem;
-    }
-}
 
-@media screen and (max-height: 500px) and (orientation: landscape) {
-    .navbar {
-        padding: 0.2rem 1rem;
-    }
-    
-    .nav-icon {
-        width: 30px;
-        height: 30px;
-    }
-    
     .nav-icon i {
-        font-size: 0.85rem;
+        font-size: 1.2rem;
+        transition: all 0.3s ease;
+        z-index: 2;
     }
-}
 
-@media screen and (min-width: 1200px) {
-    .nav-icon {
-        width: auto;
-        border-radius: 20px;
-        padding: 0 15px;
+    .nav-icon::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: rgba(255, 255, 255, 0.2);
+        transition: all 0.4s ease;
+        z-index: 1;
     }
-    
+
+    .nav-icon:hover::before {
+        left: 100%;
+    }
+
+    .nav-icon:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 6px 15px rgba(255, 107, 154, 0.5);
+    }
+
+    .nav-icon:active {
+        transform: translateY(0);
+        box-shadow: 0 3px 8px rgba(255, 107, 154, 0.4);
+    }
+
+    .home-icon:hover {
+        background: linear-gradient(45deg, var(--pink-darkest), var(--pink-dark));
+    }
+
+    .ig-icon:hover {
+        background: linear-gradient(45deg, #833AB4, #FD1D1D, #FCAF45);
+    }
+
+    /* Label untuk ikon pada layar yang lebih besar */
     .nav-icon .icon-label {
-        display: inline-block;
+        display: none;
+        margin-left: 8px;
+        font-size: 0.85rem;
+        font-weight: 600;
+        color: white;
     }
-}
+
+    /* Animasi untuk ikon */
+    @keyframes pulse {
+        0% { transform: scale(1); }
+        50% { transform: scale(1.15); }
+        100% { transform: scale(1); }
+    }
+
+    /* Ketika navbar di-scroll ke bawah (bisa ditambahkan dengan JavaScript) */
+    .navbar.scrolled {
+        padding: 0.3rem 1rem;
+        background-color: rgba(255, 255, 255, 0.95);
+        box-shadow: 0 3px 10px rgba(255, 107, 154, 0.3);
+    }
+
+    /* Responsive Styles - Ditingkatkan */
+    @media screen and (min-width: 992px) {
+        /* Pada layar besar, tambahkan animasi hover yang lebih menarik */
+        .nav-icon:hover i {
+            animation: pulse 1s infinite;
+        }
+        
+        /* Efek hover yang lebih halus */
+        .navbar-brand:hover {
+            color: var(--pink-darker);
+            transform: translateY(-2px);
+        }
+    }
+
+    @media screen and (min-width: 768px) and (max-width: 991px) {
+        .navbar {
+            padding: 0.5rem 1.5rem;
+        }
+        
+        .nav-icon {
+            width: 36px;
+            height: 36px;
+        }
+        
+        .nav-icon i {
+            font-size: 1.1rem;
+        }
+    }
+
+    @media screen and (min-width: 576px) and (max-width: 767px) {
+        .navbar {
+            padding: 0.4rem 1rem;
+        }
+        
+        .navbar-brand {
+            font-size: 1.3rem;
+        }
+        
+        .nav-icon {
+            width: 34px;
+            height: 34px;
+        }
+        
+        .nav-icon i {
+            font-size: 1rem;
+        }
+        
+        .navbar-icons {
+            gap: 0.8rem;
+        }
+    }
+
+    @media screen and (max-width: 575px) {
+        .navbar {
+            padding: 0.3rem 0.8rem;
+        }
+        
+        .navbar-brand {
+            font-size: 1.2rem;
+            max-width: 150px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        
+        .nav-icon {
+            width: 32px;
+            height: 32px;
+        }
+        
+        .nav-icon i {
+            font-size: 0.9rem;
+        }
+        
+        .navbar-icons {
+            gap: 0.6rem;
+        }
+    }
+
+    /* Handle untuk orientasi landscape pada perangkat mobile */
+    @media screen and (max-height: 500px) and (orientation: landscape) {
+        .navbar {
+            padding: 0.2rem 1rem;
+        }
+        
+        .nav-icon {
+            width: 30px;
+            height: 30px;
+        }
+        
+        .nav-icon i {
+            font-size: 0.85rem;
+        }
+    }
+
+    /* Opsi tampilan label pada layar lebih besar (opsional) */
+    @media screen and (min-width: 1200px) {
+        .nav-icon {
+            width: auto;
+            border-radius: 20px;
+            padding: 0 15px;
+        }
+        
+        .nav-icon .icon-label {
+            display: inline-block;
+        }
+    }
 
 .love-message {
     font-size: 1.25rem;
